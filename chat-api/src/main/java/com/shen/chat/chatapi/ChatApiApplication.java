@@ -16,7 +16,7 @@ public class ChatApiApplication {
 
 
 
-    private Logger logger = LoggerFactory.getLogger(ChatApiApplication.class);
+    private final Logger logger = LoggerFactory.getLogger(ChatApiApplication.class);
 
 
 
