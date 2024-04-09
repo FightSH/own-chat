@@ -1,4 +1,4 @@
-package com.shen.chat.chatapi;
+package com.shen.chatgpt.chatapi;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

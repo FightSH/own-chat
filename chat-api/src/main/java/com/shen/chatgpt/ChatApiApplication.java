@@ -1,4 +1,4 @@
-package com.shen.chat.chatapi;
+package com.shen.chatgpt;
 
 
 import org.slf4j.Logger;
@@ -16,7 +16,7 @@ public class ChatApiApplication {
 
 
 
-    private Logger logger = LoggerFactory.getLogger(ChatApiApplication.class);
+    private final Logger logger = LoggerFactory.getLogger(ChatApiApplication.class);
 
 
 
