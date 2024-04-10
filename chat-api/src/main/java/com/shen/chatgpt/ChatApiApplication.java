@@ -1,4 +1,4 @@
-package com.shen.chat.chatapi;
+package com.shen.chatgpt;
 
 
 import org.slf4j.Logger;
