@@ -1,6 +1,6 @@
 package com.shen.chat.data.domain.openai.service;
 
-import cn.bugstack.chatgpt.session.OpenAiSession;
+import cn.bugstack.chatglm.session.OpenAiSession;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.shen.chat.data.domain.openai.model.aggregates.ChatProcessAggregate;
 import com.shen.chat.data.types.common.Constants;

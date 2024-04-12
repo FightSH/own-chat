@@ -1,14 +1,20 @@
 package com.shen.chat.data.trigger.http;
 
 
-import cn.bugstack.chatgpt.common.Constants;
-import cn.bugstack.chatgpt.domain.chat.ChatChoice;
-import cn.bugstack.chatgpt.domain.chat.ChatCompletionRequest;
-import cn.bugstack.chatgpt.domain.chat.ChatCompletionResponse;
+import cn.bugstack.chatglm.model.ChatCompletionRequest;
+import cn.bugstack.chatglm.model.ChatCompletionResponse;
+import cn.bugstack.chatglm.model.Model;
+import cn.bugstack.chatglm.model.Role;
+import cn.bugstack.chatglm.session.OpenAiSession;
+
+
+
+
 import cn.bugstack.chatgpt.domain.chat.Message;
-import cn.bugstack.chatgpt.session.OpenAiSession;
+
 import com.alibaba.fastjson2.JSON;
 import com.shen.chat.data.trigger.http.dto.ChatRequestDTO;
+import com.shen.chat.data.types.common.Constants;
 import com.shen.chat.data.types.exception.ChatException;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.sse.EventSource;
@@ -87,18 +93,18 @@ public class ChatAIServiceControllerOld {
                     .builder()
                     .stream(true)
                     .messages(messages)
-                    .model(ChatCompletionRequest.Model.GPT_3_5_TURBO.getCode())
+                    .model(Model.GLM_3_5_TURBO.getCode())
                     .build();
 
             // 3.2 请求应答
-            openAiSession.chatCompletions(chatCompletion, new EventSourceListener() {
+            openAiSession.completions(chatCompletion, new EventSourceListener() {
                 @Override
                 public void onEvent(@NotNull EventSource eventSource, @Nullable String id, @Nullable String type, @NotNull String data) {
                     ChatCompletionResponse chatCompletionResponse = JSON.parseObject(data, ChatCompletionResponse.class);
-                    List<ChatChoice> choices = chatCompletionResponse.getChoices();
-                    for (ChatChoice chatChoice : choices) {
-                        Message delta = chatChoice.getDelta();
-                        if (Constants.Role.ASSISTANT.getCode().equals(delta.getRole())) continue;
+                    List<ChatCompletionResponse.Choice> choices = chatCompletionResponse.getChoices();
+                    for (ChatCompletionResponse.Choice chatChoice : choices) {
+                        ChatCompletionResponse.Delta delta = chatChoice.getDelta();
+                        if (Role.assistant.getCode().equals(delta.getRole())) continue;
 
                         // 应答完成
                         String finishReason = chatChoice.getFinishReason();
@@ -114,6 +120,7 @@ public class ChatAIServiceControllerOld {
                             throw new RuntimeException(e);
                         }
                     }
+
 
                 }
             });

@@ -63,17 +63,12 @@
             </dependency>
 
             <!-- chatgpt-sdk-java https://gitcode.net/KnowledgePlanet/chatgpt/chatgpt-sdk-java-->
-            <dependency>
-                <groupId>cn.bugstack.chatgpt</groupId>
-                <artifactId>chatgpt-sdk-java</artifactId>
-                <version>1.0-SNAPSHOT</version>
-            </dependency>
 
-<!--            <dependency>-->
-<!--                <groupId>cn.bugstack</groupId>-->
-<!--                <artifactId>chatglm-sdk-java</artifactId>-->
-<!--                <version>2.1</version>-->
-<!--            </dependency>-->
+            <dependency>
+                <groupId>cn.bugstack</groupId>
+                <artifactId>chatglm-sdk-java</artifactId>
+                <version>2.1</version>
+            </dependency>
 
 
         </dependencies>

@@ -57,10 +57,6 @@
             <artifactId>chatglm-sdk-java</artifactId>
             <version>2.1</version>
         </dependency>
-        <dependency>
-            <groupId>cn.bugstack.chatgpt</groupId>
-            <artifactId>chatgpt-sdk-java</artifactId>
-        </dependency>
     </dependencies>
 
 </project>
