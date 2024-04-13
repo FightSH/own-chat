@@ -14,9 +14,13 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ChatRequestDTO {
-    /** 默认模型 */
+    /**
+     * 默认模型
+     */
     private String model = ChatModel.GPT_3_5_TURBO.getCode();
 
-    /** 问题描述 */
+    /**
+     * 问题描述
+     */
     private List<MessageEntity> messages;
 }

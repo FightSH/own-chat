@@ -11,7 +11,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyEmitter
 import javax.annotation.Resource;
 
 @Slf4j
-public abstract class AbstractChatService implements IChatService{
+public abstract class AbstractChatService implements IChatService {
 
     @Resource
     protected OpenAiSession openAiSession;

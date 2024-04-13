@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
@@ -18,53 +18,38 @@
     </properties>
     <dependencies>
         <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.tomcat.embed</groupId>
+            <artifactId>tomcat-embed-core</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.shen</groupId>
-            <artifactId>chat-data-types</artifactId>
-            <version>1.0-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-
-
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-tx</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
-        </dependency>
-        <!-- chatgpt-sdk-java https://gitcode.net/KnowledgePlanet/chatgpt/chatgpt-sdk-java-->
-        <!--        <dependency>-->
-        <!--            <groupId>cn.bugstack.chatgpt</groupId>-->
-        <!--            <artifactId>chatgpt-sdk-java</artifactId>-->
-        <!--        </dependency>-->
-
-        <dependency>
-            <groupId>com.shen</groupId>
-            <artifactId>chat-data-domain</artifactId>
-            <version>1.0-SNAPSHOT</version>
-            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>cn.bugstack</groupId>
             <artifactId>chatglm-sdk-java</artifactId>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>cn.bugstack.chatgpt</groupId>-->
-<!--            <artifactId>chatgpt-sdk-java</artifactId>-->
-<!--        </dependency>-->
+        <dependency>
+            <groupId>com.shen</groupId>
+            <artifactId>chat-data-types</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <!--        <dependency>-->
+        <!--            <groupId>cn.bugstack.chatgpt</groupId>-->
+        <!--            <artifactId>chatgpt-sdk-java</artifactId>-->
+        <!--        </dependency>-->
 
     </dependencies>
 

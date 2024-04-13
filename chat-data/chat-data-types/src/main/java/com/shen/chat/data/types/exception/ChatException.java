@@ -1,6 +1,6 @@
 package com.shen.chat.data.types.exception;
 
-public class ChatException extends RuntimeException{
+public class ChatException extends RuntimeException {
     /**
      * 异常码
      */

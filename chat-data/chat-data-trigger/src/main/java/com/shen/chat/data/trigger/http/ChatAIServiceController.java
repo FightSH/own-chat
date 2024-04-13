@@ -10,18 +10,23 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyEmitter;
 
+import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import java.util.stream.Collectors;
 
 @Slf4j
-@RestController()
+@RestController
 @CrossOrigin("${app.config.cross-origin}")
 @RequestMapping("/api/${app.config.api-version}/")
 public class ChatAIServiceController {
     @Resource
     private IChatService chatService;
 
+    @PostConstruct
+    public void init() {
+        log.info("ChatAIServiceController init");
+    }
 
 
     @PostMapping(value = "chat/completions")
@@ -53,7 +58,6 @@ public class ChatAIServiceController {
             throw new ChatException(e.getMessage());
         }
     }
-
 
 
 }
