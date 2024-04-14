@@ -22,7 +22,7 @@ public class ChatProcessAggregate {
     /**
      * 默认模型
      */
-    private String model = ChatModel.GPT_3_5_TURBO.getCode();
+    private String model = ChatModel.GLM_4.getCode();
     /**
      * 问题描述
      */

@@ -35,7 +35,8 @@ public abstract class AbstractChatService implements IChatService {
         try {
             this.doMessageResponse(chatProcess, emitter);
         } catch (Exception e) {
-            throw new ChatException(Constants.ResponseCode.UN_ERROR.getCode(), Constants.ResponseCode.UN_ERROR.getInfo());
+            log.error("流式问答请求异常 {}",  e);
+            throw new ChatException(Constants.ResponseCode.UN_ERROR.getCode(),e.getMessage());
         }
 
         // 4. 返回结果
