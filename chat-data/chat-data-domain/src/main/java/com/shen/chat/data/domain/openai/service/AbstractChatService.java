@@ -3,6 +3,7 @@ package com.shen.chat.data.domain.openai.service;
 import cn.bugstack.chatglm.session.OpenAiSession;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.shen.chat.data.domain.openai.model.aggregates.ChatProcessAggregate;
+import com.shen.chat.data.domain.openai.model.entity.MessageEntity;
 import com.shen.chat.data.types.common.Constants;
 import com.shen.chat.data.types.exception.ChatException;
 import lombok.extern.slf4j.Slf4j;
@@ -29,7 +30,7 @@ public abstract class AbstractChatService implements IChatService {
             log.info("流式问答请求完成，使用模型：{}", chatProcess.getModel());
         });
 
-        emitter.onError(throwable -> log.error("流式问答请求疫情，使用模型：{}", chatProcess.getModel(), throwable));
+        emitter.onError(throwable -> log.error("流式问答请求异常，使用模型：{}", chatProcess.getModel(), throwable));
 
         // 3. 应答处理
         try {
@@ -46,3 +47,6 @@ public abstract class AbstractChatService implements IChatService {
     protected abstract void doMessageResponse(ChatProcessAggregate chatProcess, ResponseBodyEmitter responseBodyEmitter) throws JsonProcessingException;
 
 }
+
+
+// curl -X POST http://localhost:8090/api/v1/chat/completions -H 'Content-Type: application/json;charset=utf-8' -H 'Authorization: b8b6' -d '{"messages": [{"content": "写一个java冒泡排序","role": "user"}],"model": "gpt-3.5-turbo"}'

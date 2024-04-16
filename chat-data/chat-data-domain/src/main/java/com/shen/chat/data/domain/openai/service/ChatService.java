@@ -39,20 +39,34 @@ public class ChatService extends AbstractChatService {
                         .build())
                 .collect(Collectors.toList());
 
+
+
         // 2. 封装参数
-        ChatCompletionRequest chatCompletion = ChatCompletionRequest
-                .builder()
-                .stream(true)
-                .isCompatible(true)
-                .messages(messages)
-                .model(Model.GLM_4)
-                .build();
+        ChatCompletionRequest request = new ChatCompletionRequest();
+        request.setModel(Model.GLM_4); // GLM_3_5_TURBO、GLM_4
+        request.setIsCompatible(false);
+        request.setStream(true);
+        request.setMessages(messages);
+//        ChatCompletionRequest chatCompletion = ChatCompletionRequest
+//                .builder()
+//                .stream(true)
+//                .isCompatible(true)
+//                .messages(messages)
+//                .prompt(messages)
+//                .model(Model.GLM_4)
+//                .build();
 
         // 3.2 请求应答
         try {
-            openAiSession.completions(chatCompletion, new EventSourceListener() {
+            openAiSession.completions(request, new EventSourceListener() {
                 @Override
                 public void onEvent(@NotNull EventSource eventSource, @Nullable String id, @Nullable String type, @NotNull String data) {
+                    if ("[DONE]".equals(data)) {
+                        log.info("[输出结束] Tokens {}", com.alibaba.fastjson.JSON.toJSONString(data));
+                        emitter.complete();
+                        return;
+                    }
+                    log.info("data: {}", data);
                     ChatCompletionResponse chatCompletionResponse = JSON.parseObject(data, ChatCompletionResponse.class);
                     List<ChatCompletionResponse.Choice> choices = chatCompletionResponse.getChoices();
                     for (ChatCompletionResponse.Choice chatChoice : choices) {
