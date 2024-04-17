@@ -13,6 +13,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyEmitter
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
+import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -59,5 +60,24 @@ public class ChatAIServiceController {
         }
     }
 
+
+    @PostMapping(value = "chat/test")
+    public ResponseBodyEmitter completionsStream(HttpServletResponse response) {
+        ResponseBodyEmitter responseBodyEmitter = new ResponseBodyEmitter();
+        responseBodyEmitter.onCompletion(() -> {
+            log.info("responseBodyEmitter请求完成");
+        });
+        Executors.newSingleThreadExecutor().submit(() -> {
+            try {
+                responseBodyEmitter.send("demo");
+                Thread.sleep(3000L);
+                responseBodyEmitter.send("test");
+                responseBodyEmitter.complete();
+            } catch (Exception ignore) {
+            }
+        });
+
+        return responseBodyEmitter;
+    }
 
 }

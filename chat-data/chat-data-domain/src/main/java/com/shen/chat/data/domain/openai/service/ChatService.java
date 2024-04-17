@@ -29,7 +29,6 @@ public class ChatService extends AbstractChatService {
     @Override
     protected void doMessageResponse(ChatProcessAggregate chatProcess, ResponseBodyEmitter emitter) throws JsonProcessingException {
 
-        final CountDownLatch countDownLatch = new CountDownLatch(1);
 
         // 1. 请求消息
         List<ChatCompletionRequest.Prompt> messages = chatProcess.getMessages().stream()
@@ -71,14 +70,14 @@ public class ChatService extends AbstractChatService {
                     List<ChatCompletionResponse.Choice> choices = chatCompletionResponse.getChoices();
                     for (ChatCompletionResponse.Choice chatChoice : choices) {
                         ChatCompletionResponse.Delta delta = chatChoice.getDelta();
-                        if (Role.assistant.getCode().equals(delta.getRole())) continue;
+//                        if (Role.assistant.getCode().equals(delta.getRole())) continue;
 
                         // 应答完成
-                        String finishReason = chatChoice.getFinishReason();
-                        if (StringUtils.isNoneBlank(finishReason) && "stop".equals(finishReason)) {
-                            emitter.complete();
-                            break;
-                        }
+//                        String finishReason = chatChoice.getFinishReason();
+//                        if (StringUtils.isNoneBlank(finishReason) && "stop".equals(finishReason)) {
+//                            emitter.complete();
+//                            break;
+//                        }
 
                         // 发送信息
                         try {
@@ -92,13 +91,11 @@ public class ChatService extends AbstractChatService {
                 @Override
                 public void onClosed(EventSource eventSource) {
                     log.info("对话完成");
-                    countDownLatch.countDown();
                 }
 
                 @Override
                 public void onFailure(EventSource eventSource, @Nullable Throwable t, @Nullable Response response) {
                     log.error("对话失败", t);
-                    countDownLatch.countDown();
                 }
             });
         } catch (Exception e) {
