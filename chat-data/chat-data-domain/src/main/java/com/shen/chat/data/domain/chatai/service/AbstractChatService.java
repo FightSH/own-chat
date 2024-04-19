@@ -1,9 +1,9 @@
-package com.shen.chat.data.domain.openai.service;
+package com.shen.chat.data.domain.chatai.service;
 
 import cn.bugstack.chatglm.session.OpenAiSession;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.shen.chat.data.domain.openai.model.aggregates.ChatProcessAggregate;
-import com.shen.chat.data.domain.openai.model.entity.MessageEntity;
+import com.shen.chat.data.domain.auth.service.IAuthService;
+import com.shen.chat.data.domain.chatai.model.aggregates.ChatProcessAggregate;
 import com.shen.chat.data.types.common.Constants;
 import com.shen.chat.data.types.exception.ChatException;
 import lombok.extern.slf4j.Slf4j;
@@ -16,16 +16,17 @@ public abstract class AbstractChatService implements IChatService {
 
     @Resource
     protected OpenAiSession openAiSession;
+    @Resource
+    private IAuthService authService;
 
     @Override
-    public ResponseBodyEmitter completions(ChatProcessAggregate chatProcess) {
+    public ResponseBodyEmitter completions(ResponseBodyEmitter emitter, ChatProcessAggregate chatProcess) {
         // 1. 校验权限
         if (!"b8b6".equals(chatProcess.getToken())) {
             throw new ChatException(Constants.ResponseCode.TOKEN_ERROR.getCode(), Constants.ResponseCode.TOKEN_ERROR.getInfo());
         }
 
-        // 2. 请求应答
-        ResponseBodyEmitter emitter = new ResponseBodyEmitter(3 * 60 * 1000L);
+
         emitter.onCompletion(() -> {
             log.info("流式问答请求完成，使用模型：{}", chatProcess.getModel());
         });

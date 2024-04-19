@@ -1,4 +1,4 @@
-package com.shen.chat.data.domain.openai.service;
+package com.shen.chat.data.domain.chatai.service;
 
 
 import cn.bugstack.chatglm.model.ChatCompletionRequest;
@@ -7,20 +7,17 @@ import cn.bugstack.chatglm.model.Model;
 import cn.bugstack.chatglm.model.Role;
 import com.alibaba.fastjson2.JSON;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.shen.chat.data.domain.openai.model.aggregates.ChatProcessAggregate;
+import com.shen.chat.data.domain.chatai.model.aggregates.ChatProcessAggregate;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.Response;
-import okhttp3.internal.http.RealResponseBody;
 import okhttp3.sse.EventSource;
 import okhttp3.sse.EventSourceListener;
-import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyEmitter;
 
 import java.util.List;
-import java.util.concurrent.CountDownLatch;
 import java.util.stream.Collectors;
 @Slf4j
 @Service

@@ -1,6 +1,6 @@
-package com.shen.chat.data.domain.openai.model.aggregates;
+package com.shen.chat.data.domain.chatai.model.aggregates;
 
-import com.shen.chat.data.domain.openai.model.entity.MessageEntity;
+import com.shen.chat.data.domain.chatai.model.entity.MessageEntity;
 import com.shen.chat.data.types.enums.ChatModel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

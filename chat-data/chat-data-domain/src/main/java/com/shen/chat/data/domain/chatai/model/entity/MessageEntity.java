@@ -1,4 +1,4 @@
-package com.shen.chat.data.domain.openai.model.entity;
+package com.shen.chat.data.domain.chatai.model.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
