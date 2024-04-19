@@ -1,21 +1,21 @@
 package com.shen.chat.data.config;
 
-import com.google.common.cache.Cache;
-import com.google.common.cache.CacheBuilder;
+import com.github.benmanes.caffeine.cache.Cache;
+import com.github.benmanes.caffeine.cache.Caffeine;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.util.concurrent.TimeUnit;
 
 @Configuration
-public class GoogleGuavaCodeCacheConfig {
+public class CaffeineCacheConfig {
 
 
     @Bean(name = "codeCache")
     public Cache<String, String> codeCache() {
-        return CacheBuilder.newBuilder()
-                .expireAfterWrite(3, TimeUnit.MINUTES)
-                .build();
+
+        return Caffeine.newBuilder().expireAfterWrite(3, TimeUnit.MINUTES).build();
+
     }
 
 }
