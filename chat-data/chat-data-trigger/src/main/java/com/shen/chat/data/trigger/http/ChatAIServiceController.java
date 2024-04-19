@@ -62,7 +62,7 @@ public class ChatAIServiceController {
 
             // 2. 构建参数
             ChatProcessAggregate chatProcessAggregate = ChatProcessAggregate.builder()
-                    .token(token)
+                    .openId(token)
                     .model(request.getModel())
                     .messages(request.getMessages().stream()
                             .map(entity -> MessageEntity.builder()

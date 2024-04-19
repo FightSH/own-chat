@@ -4,6 +4,9 @@ import cn.bugstack.chatglm.session.OpenAiSession;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.shen.chat.data.domain.auth.service.IAuthService;
 import com.shen.chat.data.domain.chatai.model.aggregates.ChatProcessAggregate;
+import com.shen.chat.data.domain.chatai.model.entity.RuleLogicEntity;
+import com.shen.chat.data.domain.chatai.model.valobj.LogicCheckTypeVO;
+import com.shen.chat.data.domain.chatai.service.rule.factory.DefaultLogicFactory;
 import com.shen.chat.data.types.common.Constants;
 import com.shen.chat.data.types.exception.ChatException;
 import lombok.extern.slf4j.Slf4j;
@@ -21,31 +24,34 @@ public abstract class AbstractChatService implements IChatService {
 
     @Override
     public ResponseBodyEmitter completions(ResponseBodyEmitter emitter, ChatProcessAggregate chatProcess) {
-        // 1. 校验权限
-        if (!"b8b6".equals(chatProcess.getToken())) {
-            throw new ChatException(Constants.ResponseCode.TOKEN_ERROR.getCode(), Constants.ResponseCode.TOKEN_ERROR.getInfo());
-        }
-
-
-        emitter.onCompletion(() -> {
-            log.info("流式问答请求完成，使用模型：{}", chatProcess.getModel());
-        });
-
-        emitter.onError(throwable -> log.error("流式问答请求异常，使用模型：{}", chatProcess.getModel(), throwable));
-
-        // 3. 应答处理
         try {
-            this.doMessageResponse(chatProcess, emitter);
-        } catch (Exception e) {
-            log.error("流式问答请求异常 {}",  e);
-            throw new ChatException(Constants.ResponseCode.UN_ERROR.getCode(),e.getMessage());
-        }
+            // 1. 请求应答
+            emitter.onCompletion(() -> {
+                log.info("流式问答请求完成，使用模型：{}", chatProcess.getModel());
+            });
+            emitter.onError(throwable -> log.error("流式问答请求疫情，使用模型：{}", chatProcess.getModel(), throwable));
 
-        // 4. 返回结果
+            // 2. 规则过滤
+            RuleLogicEntity<ChatProcessAggregate> ruleLogicEntity = this.doCheckLogic(chatProcess,
+                    DefaultLogicFactory.LogicModel.ACCESS_LIMIT.getCode(),
+                    DefaultLogicFactory.LogicModel.SENSITIVE_WORD.getCode());
+            if (!LogicCheckTypeVO.SUCCESS.equals(ruleLogicEntity.getType())) {
+                emitter.send(ruleLogicEntity.getInfo());
+                emitter.complete();
+                return emitter;
+            }
+
+            // 3. 应答处理
+            this.doMessageResponse(ruleLogicEntity.getData(), emitter);
+        } catch (Exception e) {
+            throw new ChatException(Constants.ResponseCode.UN_ERROR.getCode(), Constants.ResponseCode.UN_ERROR.getInfo());
+        }
+        // 3. 返回结果
         return emitter;
     }
 
     protected abstract void doMessageResponse(ChatProcessAggregate chatProcess, ResponseBodyEmitter responseBodyEmitter) throws JsonProcessingException;
+    protected abstract RuleLogicEntity<ChatProcessAggregate> doCheckLogic(ChatProcessAggregate chatProcess, String... logics) throws Exception;
 
 }
 

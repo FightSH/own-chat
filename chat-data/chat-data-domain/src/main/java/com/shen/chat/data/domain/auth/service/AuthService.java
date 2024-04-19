@@ -1,6 +1,7 @@
 package com.shen.chat.data.domain.auth.service;
 
-import com.google.common.cache.Cache;
+
+import com.github.benmanes.caffeine.cache.Cache;
 import com.shen.chat.data.domain.auth.model.entity.AuthStateEntity;
 import com.shen.chat.data.domain.auth.model.valobj.AuthTypeVO;
 import lombok.extern.slf4j.Slf4j;

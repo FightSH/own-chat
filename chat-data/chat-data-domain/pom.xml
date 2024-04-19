@@ -68,6 +68,12 @@
             <groupId>com.github.ben-manes.caffeine</groupId>
             <artifactId>caffeine</artifactId>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/com.github.houbb/sensitive-word -->
+        <dependency>
+            <groupId>com.github.houbb</groupId>
+            <artifactId>sensitive-word</artifactId>
+        </dependency>
+
         <!--        <dependency>-->
         <!--            <groupId>cn.bugstack.chatgpt</groupId>-->
         <!--            <artifactId>chatgpt-sdk-java</artifactId>-->
